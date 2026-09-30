@@ -4,7 +4,9 @@
 
 ## 安装与更新
 
-安装包将在 [Releases](https://github.com/viosonlee/kid-game-release/releases) 发布。当前首个 Release 尚在准备上传。
+[下载最新 APK](https://github.com/viosonlee/kid-game-release/releases/latest/download/app-debug.apk) · [查看所有版本](https://github.com/viosonlee/kid-game-release/releases)
+
+当前已发布 1.0.1（`v1.0.1-2`）。
 
 - 首个版本：1.0.1（versionCode 2），调试版包名 `com.kidslanguage.companion.debug`。
 - 首次需要手动覆盖安装；后续可在应用的家长设置中检查更新。
@@ -17,4 +19,6 @@
 https://github.com/viosonlee/kid-game-release/releases/latest/download/update-debug.json
 ```
 
-首个包的发布标签为 `v1.0.1-2`。完成该 Release 上传并设为 Latest 后，默认更新地址生效。
+默认更新地址已生效。发布者将新的已签名 APK 和对应 JSON 更新到 `artifacts/` 并通过 SSH 推送 main 后，GitHub Actions 会校验签名与版本、自动发布到 Releases。
+
+APK 通过 Git LFS 传入工作流，用户从 Releases 下载。无需在仓库上传签名私钥；历史 LFS 包占用账户存储额度，免费额度以 GitHub 官方计费说明为准。
