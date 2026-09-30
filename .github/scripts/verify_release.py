@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import traceback
 
 
 def validate(root, repository, build_tools):
@@ -43,7 +44,15 @@ def validate(root, repository, build_tools):
 
 
 if __name__ == "__main__":
-    manifest, tag = validate(Path.cwd(), os.environ["GITHUB_REPOSITORY"], os.environ["BUILD_TOOLS"])
-    with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-        output.write(f"tag={tag}\nversion={manifest['versionName']}\ncode={manifest['versionCode']}\n")
-    print(f"Verified {tag}: {manifest['bytes']} bytes; package, hash and signing certificate match")
+    try:
+        manifest, tag = validate(Path.cwd(), os.environ["GITHUB_REPOSITORY"], os.environ["BUILD_TOOLS"])
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+            output.write(f"tag={tag}\nversion={manifest['versionName']}\ncode={manifest['versionCode']}\n")
+        print(f"Verified {tag}: {manifest['bytes']} bytes; package, hash and signing certificate match")
+    except Exception as error:
+        detail = traceback.format_exc()
+        if isinstance(error, subprocess.CalledProcessError):
+            detail += "\n" + (error.stdout or "") + "\n" + (error.stderr or "")
+        detail = detail.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::error title=APK verification failed::{detail}")
+        raise
