@@ -9,6 +9,12 @@ import subprocess
 import traceback
 
 
+def signer_digests(output):
+    # New build-tools may repeat the same signer for different Android SDK ranges.
+    return {value.lower() for value in re.findall(
+        r"certificate SHA-256 digest:\s*([a-fA-F0-9]{64})(?=\s|$)", output)}
+
+
 def validate(root, repository, build_tools):
     root, build_tools = Path(root), Path(build_tools)
     manifest = json.loads((root / "artifacts/update-debug.json").read_text(encoding="utf-8"))
@@ -26,9 +32,10 @@ def validate(root, repository, build_tools):
     suffix = ".bat" if os.name == "nt" else ""
     signature = subprocess.run([str(build_tools / f"apksigner{suffix}"), "verify", "--print-certs", str(apk)],
                                check=True, capture_output=True, text=True).stdout
-    actual = re.findall(r"^Signer #\d+ certificate SHA-256 digest: ([a-f0-9]{64})$", signature, re.M)
+    actual = signer_digests(signature)
     expected = (root / "signer-sha256.txt").read_text().strip()
-    assert re.fullmatch(r"[a-f0-9]{64}", expected) and actual == [expected], "APK signing certificate changed"
+    assert re.fullmatch(r"[a-f0-9]{64}", expected) and actual == {expected}, (
+        "APK signer mismatch; expected=" + expected + "; actual=" + str(sorted(actual)) + "\n" + signature[:6000])
     suffix = ".exe" if os.name == "nt" else ""
     badging = subprocess.run([str(build_tools / f"aapt{suffix}"), "dump", "badging", str(apk)],
                              check=True, capture_output=True, encoding="utf-8").stdout
