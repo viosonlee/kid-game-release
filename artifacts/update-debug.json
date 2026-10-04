@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "packageName": "com.kidslanguage.companion.debug",
-  "versionCode": 2,
-  "versionName": "1.0.1",
+  "versionCode": 3,
+  "versionName": "1.0.2",
   "minSdk": 29,
-  "apkUrl": "https://github.com/viosonlee/kid-game-release/releases/download/v1.0.1-2/app-debug.apk",
-  "bytes": 238657519,
-  "sha256": "00fb6f497514795bab96611e75dfae3a508f70054504181e55936c9a040524a6",
-  "notes": "家长设置新增应用更新：检查新版本、显示下载进度、验证安装包并交给 Android 确认安装。\n支持 GitHub Releases 和自定义 HTTPS 更新地址。\n首次请手动覆盖安装此版本，后续可在家长设置中升级。\n"
+  "apkUrl": "https://github.com/viosonlee/kid-game-release/releases/download/v1.0.2-3/app-debug.apk",
+  "bytes": 256871174,
+  "sha256": "a9f41e6f51caedb48f6e2a5c00f7f4a92dbe0a3709e76ecfc588d1c828e34df0",
+  "notes": "本次更新（1.0.2）\n\n更稳定的发音练习\n- 修复录音偶发失败；被来电或通知打断后，也能安全恢复继续练习。\n- 日语练习按读音判断更准确；听不清或超时时给出更合适的提示，不再误判为“安静”。\n- 语音识别全程离线，不联网、不上传任何录音。\n\n更适配手机与各种屏幕\n- 适配手机横屏与小屏：启动页、练习页与首页语言卡片会随屏幕宽度和字体大小自动调整。\n- 提高文字与按钮图标的对比度；较长的题目可滚动查看。\n- 练习图标不再依赖系统字体，显示更稳定。\n\n更好的鼓励与声音\n- 新增有限次数的庆祝动画与星星，答对更有成就感。\n- 统一发音音量、精简表扬语，声音更舒适。\n\n更完善的家长设置\n- 完整的课程配置与反馈音量控制，可按偏好减少动态效果。\n- 设置、统计读取与进度重置更可靠，出现异常时会明确提示。\n\n安装说明\n- 请保持同一包名与签名“覆盖安装”，不要先卸载旧版，以保留本机学习记录。\n- 之后可在家长设置的“应用更新”中直接检查并升级。\n"
 }
